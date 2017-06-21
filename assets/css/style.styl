@@ -1,0 +1,58 @@
+$color-bg = #000
+$color-footer = #fff
+$color-btn = #00aaff
+$color-btn-num = #00aaff
+$color-btn-op = #f9a600
+
+body {
+    background-color: $color-bg
+}
+
+.title {
+    color: #fff;
+    text-align: center
+}
+
+.calc {
+
+    .calc__row {
+        div {
+            margin-bottom: 10px
+        }
+    }
+
+    .calc__btn {
+        color: #fff
+        font-size: 20px
+        height: 50px
+        width: 80px
+    }
+    @media screen and (max-width: 480px) {
+        .calc__btn {
+            width: 50px
+        }
+    }
+
+    .btn_num {
+        background-color: $color-btn-num
+    }
+    .btn_op {
+        background-color: $color-btn-op
+    }
+
+}
+
+// FOOTER Section ----------/
+.footer {
+    background-color: $color-footer
+    bottom: 0
+    width: 100%
+    position: absolute
+
+    .footer__text {
+        color: $color-font
+        margin: 0 auto
+        padding: 15px 15px
+        text-align: center
+    }
+}
