@@ -12,12 +12,7 @@ body {
   color: #fff;
   font-size: 20px;
   height: 50px;
-  width: 80px;
-}
-@media screen and (max-width: 480px) {
-  .calc .calc__btn {
-    width: 50px;
-  }
+  max-width: 100%;
 }
 .calc .btn_num {
   background-color: #0af;
