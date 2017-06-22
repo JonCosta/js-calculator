@@ -5,6 +5,13 @@ body {
   color: #fff;
   text-align: center;
 }
+.calc .calc__input {
+  font-size: 60px;
+  text-align: right;
+}
+.calc .calc__query {
+  text-align: right;
+}
 .calc .calc__row div {
   margin-bottom: 10px;
 }
