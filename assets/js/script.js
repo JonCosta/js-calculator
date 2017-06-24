@@ -9,7 +9,7 @@ $(function () {
                 reset();
                 break;
             case "=":
-                calculate();
+                calculate($(".calc__query").html());
                 break;
             default:
                 setCalcVal($(this).val());
@@ -24,65 +24,64 @@ $(function () {
 
     // 
     function setCalcVal(newVal) {
-        let curVal = $(".calc__input").html();
-        let curQuery = $(".calc__query").html();
-        console.log(curVal);
-        
+        let curVal = /=/g.test($(".calc__query").html()) ? '' : $(".calc__input").html();
+        let curQuery = /=/g.test($(".calc__query").html()) ? '' : $(".calc__query").html();
+
         if (/\d/g.test(newVal)) {
             // If the current operation is division, don't allow 0 to be pressed
-            if (/\%$/g.test(curVal) && newVal == "0") return false;
+            if (/\%$/g.test(curQuery) && newVal == "0") return false;
             let val = curVal == 0 ? +newVal : curVal + "" + newVal;
-            $(".calc__input").html(val);
-            $(".calc__query").html(val);
+            $(".calc__input").html(/\D/g.test(curVal) ? newVal : val);
+            $(".calc__query").html(curQuery == 0 ? +newVal : curQuery + "" + newVal);
         } else {
             // It's a symbol, so we need to calculate OR add it to the query
-            if (/\D/g.test(curVal)) {
-                let numbers = curVal.split(/[+|\-|*|%]/g);
+            if (/\D/g.test(curQuery)) {
+                let numbers = curQuery.split(/[+|\-|x|%]/g);
                 // Replaces the operation if there's already an active operation
                 if (!(numbers[1])) {
-                    $(".calc__input").html(curVal.replace(/[+|\-|*|%]/g, newVal));
+                    $(".calc__query").html(curQuery.replace(/[+|\-|x|%]/g, newVal));
                     return false;
                 }
                 // If there's one query in order, calculate it and add the following symbol
-                calculate();
-                curVal = $(".calc__input").html();
+                curQuery = $(".calc__query").html();
+                calculate(curQuery);
             }
-            $(".calc__input").html(curVal + "" + newVal);
+            $(".calc__input").html(newVal);
+            $(".calc__query").html(curQuery + "" + newVal);
         }
-        curVal = $(".calc__input").html();
-        $(".calc__query").html(curVal);
     }
 
     // Reads the current query and shows the result
-    function calculate() {
-        let query = $(".calc__input").html();
-        let numbers = query.split(/[+|\-|*|%]/g);
-        if (!(numbers[1])) {
-            $(".calc__input").html(query.match(/[^+|\-|*|%]/g).join(""));
-            return false;
-        }
-        let operation = query.match(/[+|\-|*|%]/g)[0];
-        numbers.forEach(function (item, index) {
-            numbers[index] = parseFloat(item);
-        });
+    function calculate(query) {
+        // let query = $(".calc__query").html();
+
+        let entries = query.split("");
         let result = 0;
-        switch (operation) {
-            case '+':
-                result = numbers[0] + numbers[1];
-                break;
-            case '-':
-                result = numbers[0] - numbers[1];
-                break;
-            case '*':
-                result = numbers[0] * numbers[1];
-                break;
-            case '%':
-                result = numbers[1] != 0 ? numbers[0] / numbers[1] : 0;
-                break;
+        while (entries.length > 0) {
+            if (result == 0) {
+                result = parseFloat(entries.shift());
+            }
+            let operation = entries.shift();
+            switch (operation) {
+                case '+':
+                    result = result + parseFloat(entries.shift());
+                    break;
+                case '-':
+                    result = result - parseFloat(entries.shift());
+                    break;
+                case 'x':
+                    result = result * parseFloat(entries.shift());
+                    break;
+                case '%':
+                    result = result / parseFloat(entries.shift());
+                    break;
+            }
+
         }
+
         $(".calc__input").html(result);
         let curQuery = $(".calc__query").html();
-        $(".calc__query").html(curQuery+"="+result);
+        $(".calc__query").html(curQuery + "=" + result);
     }
 
 });
