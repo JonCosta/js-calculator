@@ -39,6 +39,7 @@ $(function () {
                 let numbers = curQuery.split(/[+|\-|x|%]/g);
                 // Replaces the operation if there's already an active operation
                 if (!(numbers[1])) {
+                    $(".calc__input").html(newVal);
                     $(".calc__query").html(curQuery.replace(/[+|\-|x|%]/g, newVal));
                     return false;
                 }
@@ -53,25 +54,30 @@ $(function () {
 
     // Reads the current query and shows the result
     function calculate(query) {
-        // let query = $(".calc__query").html();
-
-        let entries = query.split("");
-        let result = 0;
+        //We get an array with the grouped numbers and the operators in the query's order
+        let entries = groupQueryNumbers(query);
+        // Will run through the entries array, working with each removed (shifted) value
         while (entries.length > 0) {
-            if (result == 0) {
-                result = parseFloat(entries.shift());
+            // Obtains the first number value and declares the result container
+            if (result === undefined) {
+                var result = parseFloat(entries.shift());
             }
             let operation = entries.shift();
+            // Execute a different procedure based on the number/operator
             switch (operation) {
+                // Sum
                 case '+':
                     result = result + parseFloat(entries.shift());
                     break;
+                // Subtract
                 case '-':
                     result = result - parseFloat(entries.shift());
                     break;
+                // Multiply
                 case 'x':
                     result = result * parseFloat(entries.shift());
                     break;
+                // Divide
                 case '%':
                     result = result / parseFloat(entries.shift());
                     break;
@@ -82,6 +88,26 @@ $(function () {
         $(".calc__input").html(result);
         let curQuery = $(".calc__query").html();
         $(".calc__query").html(curQuery + "=" + result);
+    }
+
+    /**
+     * Reads the math query and return an array with numbers grouped and operators separated
+     * @param {String} query The math opreation to be read
+     */
+    function groupQueryNumbers(query) {
+        let arr = [];
+        query.split("").forEach(function (element, index) {
+            if (/[+|\-|x|%]/g.test(element)) {
+                arr.push(element);
+            } else {
+                if (/\d/g.test(arr[arr.length - 1])) {
+                    arr[arr.length - 1] += element;
+                } else {
+                    arr.push(element);
+                }
+            }
+        });
+        return arr;
     }
 
 });
