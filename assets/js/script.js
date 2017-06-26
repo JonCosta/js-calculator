@@ -10,7 +10,7 @@ $(function () {
                 break;
             case "=":
                 if (!/=/g.test($(".calc__query").html())) {
-                    //We get an array with the grouped numbers and the operators in the query's order
+                    // We get an array with the grouped numbers and the operators in the query's order
                     let entries = groupQueryNumbers($(".calc__query").html());
                     calculate(entries);
                 }
@@ -59,12 +59,13 @@ $(function () {
         while (entries.length > 0) {
             // Obtains the first number value and declares the result container
             if (result === undefined) {
-                // var result = parseFloat(entries.shift());
-                var result = new Big(entries.shift());
+                let val = entries.shift();
+                // Quick check in case the number is a negative
+                if (val == '-') val += entries.shift();
+                var result = new Big(val);
             }
             let operation = entries.shift();
-            // Execute a different procedure based on the number/operator]clg
-            console.log(operation);
+            // Execute a different procedure based on the number/operator
             switch (operation) {
                 // Sum
                 case '+':
@@ -84,6 +85,9 @@ $(function () {
                     break;
             }
 
+        }
+        if (/\.\d{3,}/g.test(result.toString())) {
+            result = result.toFixed(3);
         }
         // Prints the result in the main value
         $(".calc__input").html(result.toString());
