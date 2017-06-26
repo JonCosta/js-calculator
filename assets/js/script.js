@@ -25,22 +25,24 @@ $(function () {
     // 
     function setCalcVal(newVal) {
         let curVal = /=/g.test($(".calc__query").html()) ? '' : $(".calc__input").html();
-        let curQuery = /=/g.test($(".calc__query").html()) ? '' : $(".calc__query").html();
 
         if (/\d/g.test(newVal)) {
+            // Empties the value and the query if there's an "=" sign in the query
+            let curQuery = /=/g.test($(".calc__query").html()) ? '' : $(".calc__query").html();
             // If the current operation is division, don't allow 0 to be pressed
-            if (/\%$/g.test(curQuery) && newVal == "0") return false;
+            if (/\/$/g.test(curQuery) && newVal == "0") return false;
             let val = curVal == 0 ? +newVal : curVal + "" + newVal;
             $(".calc__input").html(/\D/g.test(curVal) ? newVal : val);
             $(".calc__query").html(curQuery == 0 ? +newVal : curQuery + "" + newVal);
         } else {
+            let curQuery = /=/g.test($(".calc__query").html()) ? $(".calc__query").html().split("=")[1] : $(".calc__query").html();
             // It's a symbol, so we need to calculate OR add it to the query
-            if (/\D/g.test(curQuery)) {
-                let numbers = curQuery.split(/[+|\-|x|%]/g);
+            if (/[+|\-|x|\/]/g.test(curQuery)) {
+                let numbers = curQuery.split(/[+|\-|x|\/]/g);
                 // Replaces the operation if there's already an active operation
                 if (!(numbers[1])) {
                     $(".calc__input").html(newVal);
-                    $(".calc__query").html(curQuery.replace(/[+|\-|x|%]/g, newVal));
+                    $(".calc__query").html(curQuery.replace(/[+|\-|x|\/]/g, newVal));
                     return false;
                 }
                 // If there's one query in order, calculate it and add the following symbol
@@ -67,21 +69,22 @@ $(function () {
             switch (operation) {
                 // Sum
                 case '+':
-                    result = result + parseFloat(entries.shift());
+                    result += parseFloat(entries.shift());
                     break;
                 // Subtract
                 case '-':
-                    result = result - parseFloat(entries.shift());
+                    result -= parseFloat(entries.shift());
                     break;
                 // Multiply
                 case 'x':
-                    result = result * parseFloat(entries.shift());
+                    result *= parseFloat(entries.shift());
                     break;
                 // Divide
-                case '%':
-                    result = result / parseFloat(entries.shift());
+                case '/':
+                    result /= parseFloat(entries.shift());
                     break;
             }
+            console.log(Big(3.12).times(9));
 
         }
 
@@ -97,16 +100,17 @@ $(function () {
     function groupQueryNumbers(query) {
         let arr = [];
         query.split("").forEach(function (element, index) {
-            if (/[+|\-|x|%]/g.test(element)) {
+            if (/[+|\-|x|\/]/g.test(element)) {
                 arr.push(element);
             } else {
-                if (/\d/g.test(arr[arr.length - 1])) {
+                if (/\d+\.?\d*/g.test(arr[arr.length - 1])) {
                     arr[arr.length - 1] += element;
                 } else {
                     arr.push(element);
                 }
             }
         });
+        console.log(parseFloat("3.12"));
         return arr;
     }
 
