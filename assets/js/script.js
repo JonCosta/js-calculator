@@ -1,12 +1,15 @@
 $(function () {
 
-    reset();
+    allClear();
 
     // Listener to the buttons
     $(".calc__btn").click(function () {
         switch ($(this).val()) {
-            case "CL":
-                reset();
+            case "AC":
+                allClear();
+                break;
+            case "CE":
+                clearEntry();
                 break;
             case "=":
                 if (!/=/g.test($(".calc__query").html())) {
@@ -23,9 +26,18 @@ $(function () {
     /**
      * Resets the query and main values back to "0"
      */
-    function reset() {
+    function allClear() {
         $(".calc__input").html(0);
         $(".calc__query").html(0);
+    }
+
+    function clearEntry() {
+        let curQuery = $(".calc__query").html();
+        if (/[+|\-|x|\/]\d+$/g.test(curQuery)) {
+            $(".calc__input").html(0);
+            $(".calc__query").html(curQuery.replace(/\d+$/g, ""));
+        }
+
     }
 
     /**
