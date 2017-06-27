@@ -1,31 +1,53 @@
+@import url("https://fonts.googleapis.com/css?family=Aldrich|Quantico");
 body {
   background-color: #000;
 }
 .title {
   color: #fff;
+  font-family: 'Quantico', sans-serif;
+  font-size: 70px;
   text-align: center;
 }
+.calc .calc__display {
+  border: 1px solid #000;
+  border-radius: 10px;
+  font-family: 'Quantico', sans-serif;
+  margin-bottom: 20px;
+}
 .calc .calc__input {
-  font-size: 60px;
+  font-size: 55px;
+  margin: 0 10px 0 0;
   text-align: right;
 }
 .calc .calc__query {
+  font-size: 22px;
+  margin: -15px 15px 0 0;
   text-align: right;
 }
 .calc .calc__row div {
   margin-bottom: 10px;
+  text-align: center;
 }
 .calc .calc__btn {
   color: #fff;
   font-size: 20px;
+  font-family: 'Aldrich', sans-serif;
   height: 50px;
-  max-width: 100%;
+  width: 23%;
 }
 .calc .btn_num {
   background-color: #0af;
 }
 .calc .btn_op {
   background-color: #f9a600;
+}
+@media screen and (max-width: 480px) {
+  .title {
+    font-size: 50px;
+  }
+  .container .jumbotron {
+    padding: 30px 30px;
+  }
 }
 .footer {
   background-color: #fff;
