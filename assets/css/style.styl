@@ -1,29 +1,46 @@
 @import url('https://fonts.googleapis.com/css?family=Aldrich|Quantico');
 
-$color-bg = #000
-$color-footer = #fff
-$color-btn = #00aaff
-$color-btn-num = #00aaff
-$color-btn-op = #f9a600
+$color-bg = #212431
+$color-btn-equal = #ef6d53
+$color-btn-extra = #75aaae
+$color-btn-num = #7fb069
+$color-btn-op = #6a5d7b
+$color-jumbo = #eef1e7
+$color-footer = #eef1e7
+$color-font-btn = #fff
+$color-font-footer = #000
 
 $font-button = 'Aldrich', sans-serif
 $font-display = 'Quantico', sans-serif
 
+html {
+    min-height: 100%
+    position: relative
+}
+
 body {
     background-color: $color-bg
+    margin-bottom: 70px
 }
 
 .title {
-    color: #fff
+    color: $color-font-btn
     font-family: $font-display
     font-size: 70px
     text-align: center
+    text-shadow: 5px 5px #000, 5px 5px #111
 }
 
 .calc {
 
+    background-color: $color-jumbo
+    box-shadow: 10px 10px #000
+    margin-top: 30px
+    margin-bottom: 20px
+
     .calc__display {
-        border: 1px solid #000
+        background-color: darken($color-jumbo, 10%)
+        border: 1px solid darken($color-jumbo, 40%)
         border-radius: 10px
         font-family: $font-display
         margin-bottom: 20px
@@ -49,20 +66,35 @@ body {
     }
 
     .calc__btn {
-        color: #fff
+        color: $color-font-btn
         font-size: 20px
         font-family: $font-button
         height: 50px
         width: 23%
     }
 
+    .btn_equal {
+        background-color: $color-btn-equal
+        width: 65%
+    }
+    .btn_extra {
+        background-color: $color-btn-extra
+    }
     .btn_num {
         background-color: $color-btn-num
     }
     .btn_op {
         background-color: $color-btn-op
     }
+    .btn_zero {
+        background-color: $color-btn-num
+        width: 30%
+    }
 
+}
+
+.container .jumbotron {
+    padding: 30px 30px
 }
 
 @media screen and (max-width: 480px) {
@@ -70,10 +102,7 @@ body {
     .title {
         font-size: 50px
     }
-    
-    .container .jumbotron {
-        padding: 30px 30px
-    }
+
 }
 
 // FOOTER Section ----------/
@@ -84,7 +113,7 @@ body {
     position: absolute
 
     .footer__text {
-        color: $color-font
+        color: $color-font-footer
         margin: 0 auto
         padding: 15px 15px
         text-align: center

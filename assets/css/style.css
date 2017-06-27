@@ -1,15 +1,28 @@
 @import url("https://fonts.googleapis.com/css?family=Aldrich|Quantico");
+html {
+  min-height: 100%;
+  position: relative;
+}
 body {
-  background-color: #000;
+  background-color: #212431;
+  margin-bottom: 70px;
 }
 .title {
   color: #fff;
   font-family: 'Quantico', sans-serif;
   font-size: 70px;
   text-align: center;
+  text-shadow: 5px 5px #000, 5px 5px #111;
+}
+.calc {
+  background-color: #eef1e7;
+  box-shadow: 10px 10px #000;
+  margin-top: 30px;
+  margin-bottom: 20px;
 }
 .calc .calc__display {
-  border: 1px solid #000;
+  background-color: #d9e0c9;
+  border: 1px solid #9aab70;
   border-radius: 10px;
   font-family: 'Quantico', sans-serif;
   margin-bottom: 20px;
@@ -35,28 +48,39 @@ body {
   height: 50px;
   width: 23%;
 }
+.calc .btn_equal {
+  background-color: #ef6d53;
+  width: 65%;
+}
+.calc .btn_extra {
+  background-color: #75aaae;
+}
 .calc .btn_num {
-  background-color: #0af;
+  background-color: #7fb069;
 }
 .calc .btn_op {
-  background-color: #f9a600;
+  background-color: #6a5d7b;
+}
+.calc .btn_zero {
+  background-color: #7fb069;
+  width: 30%;
+}
+.container .jumbotron {
+  padding: 30px 30px;
 }
 @media screen and (max-width: 480px) {
   .title {
     font-size: 50px;
   }
-  .container .jumbotron {
-    padding: 30px 30px;
-  }
 }
 .footer {
-  background-color: #fff;
+  background-color: #eef1e7;
   bottom: 0;
   width: 100%;
   position: absolute;
 }
 .footer .footer__text {
-  color: $color-font;
+  color: #000;
   margin: 0 auto;
   padding: 15px 15px;
   text-align: center;
