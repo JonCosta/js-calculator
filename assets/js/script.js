@@ -53,14 +53,16 @@ $(function () {
     function setCalcVal(newVal) {
         let curVal = /=/g.test($(".calc__query").html()) ? '' : $(".calc__input").html();
         if (/\d|\./g.test(newVal)) {
+            if (/\D$/g.test(curVal) && newVal == ".") return false;            
             // Empties the value and the query if there's an "=" sign in the query
             let curQuery = /=/g.test($(".calc__query").html()) ? '' : $(".calc__query").html();
             // If the current operation is division, don't allow 0 to be pressed
-            if (/\/$/g.test(curQuery) && newVal == "0") return false;
-            let val = curVal == 0 ? +newVal : curVal + "" + newVal;
+            if ((/\/$/g.test(curQuery) && newVal == "0") || (/\./g.test(curVal) && newVal == ".")) return false;
+            let val = curVal == "0" && newVal != "." ? +newVal : curVal + "" + newVal;
             $(".calc__input").html(/[+|\-|x|\/]/g.test(curVal) ? newVal : val);
-            $(".calc__query").html(curQuery == 0 ? +newVal : curQuery + "" + newVal);
+            $(".calc__query").html(curQuery == "0" && newVal != "." ? +newVal : curQuery + "" + newVal);
         } else {
+            if (/\.$/g.test(curVal)) return false;
             // If the query has a result, start a new query with the result as first value
             let curQuery = /=/g.test($(".calc__query").html()) ? $(".calc__query").html().split("=")[1] : $(".calc__query").html();
             // If the query's last digit is an operator, change it for the new one
