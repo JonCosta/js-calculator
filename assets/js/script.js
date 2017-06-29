@@ -24,6 +24,7 @@ $(function () {
             default:
                 setCalcVal($(this).val());
         }
+        fitText();
     });
 
     /**
@@ -51,22 +52,35 @@ $(function () {
      * @param {String} newVal Number or operator (1, 2, 3... or +, -, * ...)
      */
     function setCalcVal(newVal) {
-        let curVal = /=/g.test($(".calc__query").html()) ? '' : $(".calc__input").html();
-        if (/\d|\./g.test(newVal)) {
-            if (/\D$/g.test(curVal) && newVal == ".") return false;            
+        let curVal = $(".calc__input").html();
+
+        if (/\d/g.test(newVal)) {
             // Empties the value and the query if there's an "=" sign in the query
             let curQuery = /=/g.test($(".calc__query").html()) ? '' : $(".calc__query").html();
             // If the current operation is division, don't allow 0 to be pressed
             if ((/\/$/g.test(curQuery) && newVal == "0") || (/\./g.test(curVal) && newVal == ".")) return false;
-            let val = curVal == "0" && newVal != "." ? +newVal : curVal + "" + newVal;
+            let val = curVal == "0" ? +newVal : curVal + "" + newVal;
             $(".calc__input").html(/[+|\-|x|\/]/g.test(curVal) ? newVal : val);
-            $(".calc__query").html(curQuery == "0" && newVal != "." ? +newVal : curQuery + "" + newVal);
+            $(".calc__query").html(curQuery == "0" ? +newVal : curQuery + "" + newVal);
+        } else if (/\./g.test(newVal)) {
+            // Check if the last number entry already has a "."
+            if (/\./g.test(curVal)) return false;
+            let curQuery = /=/g.test($(".calc__query").html()) ? $(".calc__query").html().split("=")[1] : $(".calc__query").html();
+            // If the "currentVal" is a symbol (+ - / *), add "0.0"
+            $(".calc__input").html(/[+|\-|x|\/]/g.test(curVal) ? "0." : curVal + newVal);
+            $(".calc__query").html(/[+|\-|x|\/]$/g.test(curQuery) ? curQuery + "0." : curQuery + newVal);
         } else {
             if (/\.$/g.test(curVal)) return false;
             // If the query has a result, start a new query with the result as first value
             let curQuery = /=/g.test($(".calc__query").html()) ? $(".calc__query").html().split("=")[1] : $(".calc__query").html();
-            // If the query's last digit is an operator, change it for the new one
-            if (/[+|\-|x|\/]$/g.test(curQuery)) curQuery = curQuery.replace(/[+|\-|x|\/]$/g, '');
+            if (newVal == "-") {
+                curQuery = curQuery.replace(/[+|\-]$/g, '');
+            } else {
+                // If the query's last digit is an operator, change it for the new one
+                if (/[x|\/]\-$/g.test(curQuery)) return false;
+                if (/[+|\-|x|\/]$/g.test(curQuery)) curQuery = curQuery.replace(/[+|\-|x|\/]$/g, '');
+
+            }
             $(".calc__input").html(newVal);
             $(".calc__query").html(curQuery + "" + newVal);
         }
@@ -83,6 +97,26 @@ $(function () {
             result = result.toFixed(3);
         }
         return result;
+    }
+
+    /**
+     * Reduces the font size when it overflows the display div
+     */
+    function fitText() {
+        let el = document.querySelector(".calc__display");
+        if ((el.offsetHeight < el.scrollHeight) || (el.offsetWidth < el.scrollWidth)) {
+            while ((el.offsetHeight < el.scrollHeight) || (el.offsetWidth < el.scrollWidth)) {
+                // Adjusts the main value's size
+                let textSize = $(".calc__input").css("font-size");
+                $(".calc__input").css("font-size", (parseInt(textSize) - 1) + "px");
+                // Also adjusts the query's size to keep the proportion
+                textSize = $(".calc__query").css("font-size");
+                $(".calc__query").css("font-size", (parseInt(textSize) - 1) + "px");
+            }
+        } else {
+            $(".calc__input").css("font-size", "55px");
+            $(".calc__query").css("font-size", "22px");
+        }
     }
 
 });
