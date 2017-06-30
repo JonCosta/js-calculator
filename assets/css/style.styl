@@ -13,6 +13,29 @@ $color-font-footer = #000
 $font-button = 'Aldrich', sans-serif
 $font-display = 'Quantico', sans-serif
 
+btn-style(bg-color) {
+    outline: none
+    box-shadow: 0 1px 3px darken(bg-color, 60%)
+    
+    &:hover {
+        background-color: lighten(bg-color, 20%)
+    }
+    &:active {
+        box-shadow: 0 1px 3px darken(bg-color, 1%)
+        height: 49px
+    }
+    &:active, &:focus {
+        border: none
+        outline: none
+    }
+}
+
+btn-border-radius(size) {
+    -webkit-border-radius: size
+    -moz-border-radius: size
+    border-radius: size
+}
+
 html {
     min-height: 100%
     position: relative
@@ -45,6 +68,9 @@ body {
         font-family: $font-display
         margin-bottom: 20px
         overflow: hidden
+        -webkit-user-select: none; /* Chrome/Safari */        
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* IE10+ */
     }
 
     .calc__input {
@@ -67,7 +93,7 @@ body {
     }
 
     .calc__btn {
-        color: $color-font-btn
+        btn-border-radius(7px)
         font-size: 20px
         font-family: $font-button
         height: 50px
@@ -76,22 +102,33 @@ body {
 
     .btn_equal {
         background-color: $color-btn-equal
+        btn-style($color-btn-equal)
         width: 65%
     }
     .btn_extra {
         background-color: $color-btn-extra
+        btn-style($color-btn-extra)
+        
     }
     .btn_num {
         background-color: $color-btn-num
+        btn-style($color-btn-num)
     }
     .btn_op {
         background-color: $color-btn-op
+        btn-style($color-btn-op)
     }
     .btn_zero {
         background-color: $color-btn-num
+        btn-style($color-btn-num)
         width: 30%
     }
 
+}
+
+.btn_ac:active,
+.btn_ce:active {
+    
 }
 
 .container .jumbotron {

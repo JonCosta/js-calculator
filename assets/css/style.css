@@ -27,6 +27,9 @@ body {
   font-family: 'Quantico', sans-serif;
   margin-bottom: 20px;
   overflow: hidden;
+  -webkit-user-select: none; /* Chrome/Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
 }
 .calc .calc__input {
   font-size: 55px;
@@ -43,7 +46,9 @@ body {
   text-align: center;
 }
 .calc .calc__btn {
-  color: #fff;
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  border-radius: 7px;
   font-size: 20px;
   font-family: 'Aldrich', sans-serif;
   height: 50px;
@@ -51,20 +56,90 @@ body {
 }
 .calc .btn_equal {
   background-color: #ef6d53;
+  outline: none;
+  box-shadow: 0 1px 3px #761d0b;
   width: 65%;
+}
+.calc .btn_equal:hover {
+  background-color: #f28a75;
+}
+.calc .btn_equal:active {
+  box-shadow: 0 1px 3px #ef6a50;
+  height: 49px;
+}
+.calc .btn_equal:active,
+.calc .btn_equal:focus {
+  border: none;
+  outline: none;
 }
 .calc .btn_extra {
   background-color: #75aaae;
+  outline: none;
+  box-shadow: 0 1px 3px #2b4749;
+}
+.calc .btn_extra:hover {
+  background-color: #91bbbe;
+}
+.calc .btn_extra:active {
+  box-shadow: 0 1px 3px #73a9ad;
+  height: 49px;
+}
+.calc .btn_extra:active,
+.calc .btn_extra:focus {
+  border: none;
+  outline: none;
 }
 .calc .btn_num {
   background-color: #7fb069;
+  outline: none;
+  box-shadow: 0 1px 3px #324a27;
+}
+.calc .btn_num:hover {
+  background-color: #99c087;
+}
+.calc .btn_num:active {
+  box-shadow: 0 1px 3px #7daf67;
+  height: 49px;
+}
+.calc .btn_num:active,
+.calc .btn_num:focus {
+  border: none;
+  outline: none;
 }
 .calc .btn_op {
   background-color: #6a5d7b;
+  outline: none;
+  box-shadow: 0 1px 3px #2a2531;
+}
+.calc .btn_op:hover {
+  background-color: #87799a;
+}
+.calc .btn_op:active {
+  box-shadow: 0 1px 3px #695c7a;
+  height: 49px;
+}
+.calc .btn_op:active,
+.calc .btn_op:focus {
+  border: none;
+  outline: none;
 }
 .calc .btn_zero {
   background-color: #7fb069;
+  outline: none;
+  box-shadow: 0 1px 3px #324a27;
   width: 30%;
+}
+.calc .btn_zero:hover {
+  background-color: #99c087;
+}
+.calc .btn_zero:active {
+  box-shadow: 0 1px 3px #7daf67;
+  height: 49px;
+}
+.calc .btn_zero:active,
+.calc .btn_zero:focus {
+  border: none;
+  outline: none;
 }
 .container .jumbotron {
   padding: 30px 30px;
